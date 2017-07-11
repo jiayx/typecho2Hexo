@@ -21,9 +21,9 @@ $res = $db->query($sql);
 if ($res && $res->num_rows > 0) {
     is_dir('posts') OR mkdir('posts');
 
-    while ($r = $res->fetch_object() ) {
-        $created = date('Y-m-d H:i:s',$r->created);
-        $content = str_replace('<!--markdown-->','',$r->text);
+    while ($r = $res->fetch_object()) {
+        $created = date('Y-m-d H:i:s', $r->created);
+        $content = str_replace('<!--markdown-->', '', $r->text);
         $templet = <<<TEMPLET
 ---
 title: $r->title
@@ -36,7 +36,7 @@ $content
 
 TEMPLET;
         //替换不合法文件名字符
-        $filename = str_replace(array(" ", "?","\\","/" ,":" ,"|", "*" ), '-', $r->title);
+        $filename = str_replace([" ", "?", "\\", "/", ":" , "|", "*"], '-', $r->title);
         file_put_contents('posts/'.$filename.'.md', $templet);
     }
 
